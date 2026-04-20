@@ -7,11 +7,26 @@ app = FastAPI()
 def read_root():
     return{"message": "Bienvenido a fastPI!"}
 
+@app.get("/")
+def read_root():
+    return{"message": "Bienvenido a fastPI!"}
 productos = []  
 
 @app.get("/productos")
 def listar_productos():
     return {"productos": productos}
+
+@app.get("/productos/{id}", tags=["Productos"], summary="Ver detalle de un producto")
+def obtener_descripcion_producto(id: int):
+
+    if id < len(productos):
+        producto_nombre = productos[id]
+        return {
+            "id": id,
+            "descripcion": f"Este es el producto: {producto_nombre}",
+            "nombre": producto_nombre
+        }
+    return {"error": "Producto no encontrado"}
 
 @app.post("/productos")
 def agregar_productos(nombre:str):
@@ -27,3 +42,17 @@ def actualizar_producto(id:int, nombre: str):
 def eliminar_producto(id:int):
     eliminado = productos.pop(id)
     return {"mensaje": "producto eliminado", "producto": eliminado}
+@app.delete("/productos/{id}")
+def eliminar_producto(id:int):
+    eliminado = productos.pop(id)
+    return {"mensaje": "producto eliminado", "producto": eliminado}
+
+@app.delete("/productos/{id}")
+def eliminar_producto(id:int):
+    eliminado = productos.pop(id)
+    return {"mensaje": "producto eliminado", "producto": eliminado}
+
+
+@app.get("/items/", description="Esta es una descripción detallada del endpoint")
+async def read_items():
+    return [{"item_id": "Foo"}]
