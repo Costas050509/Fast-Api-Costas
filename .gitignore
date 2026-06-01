@@ -1,0 +1,22 @@
+# --- Archivos temporales de Python ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.env/
+
+# --- Configuraciones de VS Code y editores ---
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# --- Archivos del Sistema Operativo ---
+.DS_Store
+Thumbs.db
