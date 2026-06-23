@@ -14,7 +14,7 @@ def get_current_user(
 
 ):
     cred_exc = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED
+        status_code=status.HTTP_401_UNAUTHORIZED,
         details ="no autenticado",
         headers ={"WWW-Authenticate": "Bearer"},
     )
