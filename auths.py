@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from jose import jwt
 
-SECRET_KEY = "4321"  # Asegúrate de tener tu clave
+SECRET_KEY = "4321"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 

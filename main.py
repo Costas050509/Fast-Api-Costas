@@ -2,13 +2,16 @@ from fastapi import FastAPI, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from fastapi.security import OAuth2PasswordRequestForm
 import crud, schemas
+from api.v1.api import api_router
 from database import get_db
 from schemas import ProductoCreate
 from utils import verify_password
-from auth import crear_token
+from auths import crear_token
 from deps import get_current_user, require_admin
 
 app = FastAPI()
+
+app.include_router(api_router, prefix="api/v1")
 
 @app.get("/")
 def read_root():
@@ -31,7 +34,7 @@ def obtener_descripcion_producto(id: int):
         }
     return {"error": "Producto no encontrado"}
 
-@app.post("/productos", response_model=schemas.ProductoCreate)
+@app.post("/productos", response_model=schemas.ProductoCreate, dependencies=[Depends(require_admin)])
 def agregar_productos(producto: schemas.ProductoCreate, db: Session = Depends(get_db)):
     return crud.crear_producto(db, producto)
 
@@ -52,7 +55,7 @@ def eliminar_producto(producto_id: int, db: Session = Depends(get_db)):
 async def read_items():
     return [{"item_id": "Foo"}]
 
-@app.post("/categorias", response_model=schemas.CategoriaResponse)
+@app.post("/categorias", response_model=schemas.CategoriaResponse, dependencies=[Depends(require_admin)])
 def crear_categoria(categoria: schemas.CategoriaCreate, db: Session = Depends(get_db)):
     return crud.crear_categoria(db, categoria)
 
